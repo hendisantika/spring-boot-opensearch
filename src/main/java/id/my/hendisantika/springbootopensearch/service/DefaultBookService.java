@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.opensearch.client.RestHighLevelClient;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,4 +33,11 @@ public class DefaultBookService implements BookService {
         return bookRepository.findByIsbn(isbn);
     }
 
+    @Override
+    public List<Book> getAll() {
+        List<Book> books = new ArrayList<>();
+        bookRepository.findAll()
+                .forEach(books::add);
+        return books;
+    }
 }
