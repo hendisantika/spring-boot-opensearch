@@ -1,6 +1,8 @@
 package id.my.hendisantika.springbootopensearch.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,4 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class Redirect {
+    @GetMapping(value = "/")
+    public ModelAndView redirectToDocPage() {
+        return new ModelAndView("redirect:/swagger-ui/index.html");
+    }
 }
