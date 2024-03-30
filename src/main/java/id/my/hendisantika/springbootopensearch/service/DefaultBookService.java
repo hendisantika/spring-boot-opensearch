@@ -40,4 +40,9 @@ public class DefaultBookService implements BookService {
                 .forEach(books::add);
         return books;
     }
+
+    @Override
+    public List<Book> findByAuthor(String authorName) {
+        return bookRepository.findByAuthorName(authorName);
+    }
 }
