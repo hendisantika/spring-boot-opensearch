@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -100,5 +101,14 @@ class SpringBootOpensearchApplicationTests {
         assertEquals("Jordan Peterson", createdBook.getAuthorName());
         assertEquals(2018, createdBook.getPublicationYear());
         assertEquals("978-0345816023", createdBook.getIsbn());
+    }
+
+    @Test
+    void testCreateBookWithDuplicateISBNThrowsException() throws DuplicateIsbnException {
+        Book createdBook = bookService.create(createBook("12 rules for life", "Jordan Peterson", 2018, "978-0345816023"));
+        assertNotNull(createdBook);
+        assertThrows(DuplicateIsbnException.class, () -> {
+            bookService.create(createBook("Test title", "Test author", 2010, "978-0345816023"));
+        });
     }
 }
