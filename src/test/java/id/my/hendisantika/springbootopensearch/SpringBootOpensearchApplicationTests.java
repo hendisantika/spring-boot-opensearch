@@ -143,4 +143,13 @@ class SpringBootOpensearchApplicationTests {
         assertEquals(2018, updatedBook.getPublicationYear());
         assertEquals("978-0345816023", updatedBook.getIsbn());
     }
+
+    @Test
+    void testUpdateBookThrowsExceptionIfCannotFindBook() {
+        Book updatedBook = createBook("12 rules for life", "Jordan Peterson", 2000, "978-0345816023");
+
+        assertThrows(BookNotFoundException.class, () -> {
+            bookService.update("1A2B3C", updatedBook);
+        });
+    }
 }
