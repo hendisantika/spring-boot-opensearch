@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: spring-boot-opensearch
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+opensearch:
+  uris: http://localhost:9200
+  username: admin
+  password: admin
+
