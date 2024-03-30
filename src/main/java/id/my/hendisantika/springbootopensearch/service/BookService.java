@@ -1,5 +1,7 @@
 package id.my.hendisantika.springbootopensearch.service;
 
+import id.my.hendisantika.springbootopensearch.exception.BookNotFoundException;
+import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 
 import java.util.List;
