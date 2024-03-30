@@ -1,9 +1,12 @@
 package id.my.hendisantika.springbootopensearch.service;
 
+import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.opensearch.client.RestHighLevelClient;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,4 +25,10 @@ public class DefaultBookService implements BookService {
     private final BookRepository bookRepository;
 
     private final RestHighLevelClient restHighLevelClient;
+
+    @Override
+    public Optional<Book> getByIsbn(String isbn) {
+        return bookRepository.findByIsbn(isbn);
+    }
+
 }
