@@ -1,13 +1,22 @@
 package id.my.hendisantika.springbootopensearch;
 
-import org.junit.jupiter.api.Test;
+import id.my.hendisantika.springbootopensearch.service.BookService;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.containers.GenericContainer;
 
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SpringBootOpensearchApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+    private static final GenericContainer<?> openSearchContainer = SingletonContainer.getInstance();
 
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private ElasticsearchOperations operations;
 }
