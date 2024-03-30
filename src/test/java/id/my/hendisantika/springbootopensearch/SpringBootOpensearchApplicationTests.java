@@ -1,5 +1,6 @@
 package id.my.hendisantika.springbootopensearch;
 
+import id.my.hendisantika.springbootopensearch.exception.BookNotFoundException;
 import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.service.BookService;
@@ -123,5 +124,23 @@ class SpringBootOpensearchApplicationTests {
         List<Book> books = bookService.findByAuthor("Jordan Peterson");
 
         assertTrue(books.isEmpty());
+    }
+
+    @Test
+    void testUpdateBook() throws DuplicateIsbnException, BookNotFoundException {
+        Book bookToUpdate = bookService.create(createBook("12 rules for life", "Jordan Peterson", 2000, "978-0345816023"));
+
+        assertNotNull(bookToUpdate);
+        assertNotNull(bookToUpdate.getId());
+
+        bookToUpdate.setPublicationYear(2018);
+        Book updatedBook = bookService.update(bookToUpdate.getId(), bookToUpdate);
+
+        assertNotNull(updatedBook);
+        assertNotNull(updatedBook.getId());
+        assertEquals("12 rules for life", updatedBook.getTitle());
+        assertEquals("Jordan Peterson", updatedBook.getAuthorName());
+        assertEquals(2018, updatedBook.getPublicationYear());
+        assertEquals("978-0345816023", updatedBook.getIsbn());
     }
 }
