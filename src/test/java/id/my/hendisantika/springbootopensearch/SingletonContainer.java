@@ -15,4 +15,13 @@ import org.testcontainers.containers.GenericContainer;
 public class SingletonContainer {
     private static final GenericContainer<?> openSearchContainer = createOpenSearchContainer();
     private static final boolean isStarted = false;
+
+    public static synchronized void startContainer() {
+        if (!isStarted) {
+            System.out.println("Starting container...");
+            openSearchContainer.start();
+            isStarted = true;
+            System.out.println("Container started.");
+        }
+    }
 }
