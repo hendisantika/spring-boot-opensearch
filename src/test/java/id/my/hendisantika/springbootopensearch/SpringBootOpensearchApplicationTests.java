@@ -111,4 +111,17 @@ class SpringBootOpensearchApplicationTests {
             bookService.create(createBook("Test title", "Test author", 2010, "978-0345816023"));
         });
     }
+
+    @Test
+    void testDeleteBookById() throws DuplicateIsbnException {
+        Book createdBook = bookService.create(createBook("12 rules for life", "Jordan Peterson", 2018, "978-0345816023"));
+
+        assertNotNull(createdBook);
+        assertNotNull(createdBook.getId());
+
+        bookService.deleteById(createdBook.getId());
+        List<Book> books = bookService.findByAuthor("Jordan Peterson");
+
+        assertTrue(books.isEmpty());
+    }
 }
