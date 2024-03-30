@@ -45,4 +45,9 @@ public class DefaultBookService implements BookService {
     public List<Book> findByAuthor(String authorName) {
         return bookRepository.findByAuthorName(authorName);
     }
+
+    @Override
+    public List<Book> findByTitleAndAuthor(String title, String author) {
+        return bookRepository.findByTitleAndAuthorName(title, author);
+    }
 }
