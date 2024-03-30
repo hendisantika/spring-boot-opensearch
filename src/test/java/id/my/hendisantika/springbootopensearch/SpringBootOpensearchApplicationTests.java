@@ -1,15 +1,24 @@
 package id.my.hendisantika.springbootopensearch;
 
+import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
+import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.service.BookService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
+
+import java.util.Optional;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,5 +41,18 @@ class SpringBootOpensearchApplicationTests {
     @BeforeEach
     void testIsContainerRunning() {
         recreateIndex();
+    }
+
+    @Test
+    void testGetBookByIsbn() throws DuplicateIsbnException {
+        bookService.create(createBook("12 rules for life", "Jordan Peterson", 2018, "978-0345816023"));
+        Optional<Book> result = bookService.getByIsbn("978-0345816023");
+        assertTrue(result.isPresent());
+        Book createdBook = result.get();
+        assertNotNull(createdBook);
+        assertEquals("12 rules for life", createdBook.getTitle());
+        assertEquals("Jordan Peterson", createdBook.getAuthorName());
+        assertEquals(2018, createdBook.getPublicationYear());
+        assertEquals("978-0345816023", createdBook.getIsbn());
     }
 }
