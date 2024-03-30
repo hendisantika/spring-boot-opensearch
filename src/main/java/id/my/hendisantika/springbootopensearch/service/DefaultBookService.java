@@ -4,7 +4,6 @@ import id.my.hendisantika.springbootopensearch.exception.BookNotFoundException;
 import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.repository.BookRepository;
-import lombok.RequiredArgsConstructor;
 import org.opensearch.client.RestHighLevelClient;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +22,17 @@ import java.util.Optional;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class DefaultBookService implements BookService {
 
     private final BookRepository bookRepository;
 
     private final RestHighLevelClient restHighLevelClient;
+
+    public DefaultBookService(BookRepository bookRepository, RestHighLevelClient restHighLevelClient) {
+        this.bookRepository = bookRepository;
+        this.restHighLevelClient = restHighLevelClient;
+    }
 
     @Override
     public Optional<Book> getByIsbn(String isbn) {
