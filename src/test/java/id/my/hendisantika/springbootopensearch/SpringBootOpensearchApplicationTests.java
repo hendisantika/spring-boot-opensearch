@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
 
@@ -160,5 +161,14 @@ class SpringBootOpensearchApplicationTests {
         book.setPublicationYear(publicationYear);
         book.setIsbn(isbn);
         return book;
+    }
+
+    private void recreateIndex() {
+        IndexOperations indexOperations = operations.indexOps(Book.class);
+        if (indexOperations.exists()) {
+            indexOperations.delete();
+            indexOperations.create();
+            indexOperations.refresh();
+        }
     }
 }
