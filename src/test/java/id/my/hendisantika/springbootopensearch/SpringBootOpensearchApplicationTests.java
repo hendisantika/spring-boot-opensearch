@@ -1,6 +1,8 @@
 package id.my.hendisantika.springbootopensearch;
 
 import id.my.hendisantika.springbootopensearch.service.BookService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,4 +21,10 @@ class SpringBootOpensearchApplicationTests {
 
     @Autowired
     private ElasticsearchOperations operations;
+
+    @BeforeAll
+    static void beforeAll() {
+        SingletonContainer.startContainer();
+        Assertions.assertTrue(openSearchContainer.isRunning());
+    }
 }
