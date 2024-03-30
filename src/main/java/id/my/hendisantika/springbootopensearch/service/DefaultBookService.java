@@ -1,5 +1,6 @@
 package id.my.hendisantika.springbootopensearch.service;
 
+import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,32 @@ public class DefaultBookService implements BookService {
     @Override
     public List<Book> findByTitleAndAuthor(String title, String author) {
         return bookRepository.findByTitleAndAuthorName(title, author);
+    }
+
+    //    @Override
+//    public List<Book> findByTitleAndAuthor(String title, String author) {
+//        var criteria = QueryBuilders.boolQuery()
+//                .must(QueryBuilders.matchQuery("authorName", author))
+//                .must(QueryBuilders.matchQuery("title", title));
+//
+//        SearchRequest searchRequest = new SearchRequest("book-index");
+//        searchRequest.source().query(criteria);
+//
+//        try {
+//            SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+//            return Arrays.stream(response.getHits().getHits())
+//                    .map(hit -> new ObjectMapper().convertValue(hit.getSourceAsMap(), Book.class))
+//                    .collect(Collectors.toList());
+//        } catch (IOException e) {
+//            throw new RuntimeException("Error executing search", e);
+//        }
+//    }
+
+    @Override
+    public Book create(Book book) throws DuplicateIsbnException {
+        if (getByIsbn(book.getIsbn()).isEmpty()) {
+            return bookRepository.save(book);
+        }
+        throw new DuplicateIsbnException(String.format("The provided ISBN: %s already exists. Use update instead!", book.getIsbn()));
     }
 }
