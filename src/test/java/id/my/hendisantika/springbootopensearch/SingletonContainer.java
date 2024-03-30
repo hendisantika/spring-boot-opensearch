@@ -24,4 +24,8 @@ public class SingletonContainer {
             System.out.println("Container started.");
         }
     }
+
+    public static GenericContainer<?> getInstance() {
+        return openSearchContainer;
+    }
 }
