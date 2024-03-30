@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,5 +59,11 @@ public class BookController {
     @GetMapping(value = "/query")
     public List<Book> getBooksByAuthorAndTitle(@RequestParam(value = "title") String title, @RequestParam(value = "author") String author) {
         return bookService.findByTitleAndAuthor(title, author);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value = "/{id}")
+    public Book updateBook(@PathVariable String id, @RequestBody BookDto book) throws BookNotFoundException {
+        return bookService.update(id, BookDto.transform(book));
     }
 }
