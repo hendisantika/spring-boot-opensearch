@@ -20,4 +20,9 @@ public class Redirect {
     public ModelAndView redirectToDocPage() {
         return new ModelAndView("redirect:/swagger-ui/index.html");
     }
+
+    @GetMapping(value = "/apidocs")
+    public ModelAndView redirectToApiPage() {
+        return new ModelAndView("redirect:/swagger-ui/index.html");
+    }
 }
