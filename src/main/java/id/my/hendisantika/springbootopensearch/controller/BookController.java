@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,5 +52,11 @@ public class BookController {
     @GetMapping(value = "/{isbn}")
     public Book getBookByIsbn(@PathVariable String isbn) throws BookNotFoundException {
         return bookService.getByIsbn(isbn).orElseThrow(() -> new BookNotFoundException("The given isbn is invalid"));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/query")
+    public List<Book> getBooksByAuthorAndTitle(@RequestParam(value = "title") String title, @RequestParam(value = "author") String author) {
+        return bookService.findByTitleAndAuthor(title, author);
     }
 }
