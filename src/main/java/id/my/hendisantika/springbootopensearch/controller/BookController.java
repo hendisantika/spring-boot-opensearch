@@ -8,6 +8,7 @@ import id.my.hendisantika.springbootopensearch.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,5 +66,11 @@ public class BookController {
     @PutMapping(value = "/{id}")
     public Book updateBook(@PathVariable String id, @RequestBody BookDto book) throws BookNotFoundException {
         return bookService.update(id, BookDto.transform(book));
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{id}")
+    public void deleteBook(@PathVariable String id) {
+        bookService.deleteById(id);
     }
 }
