@@ -78,4 +78,9 @@ public class DefaultBookService implements BookService {
         }
         throw new DuplicateIsbnException(String.format("The provided ISBN: %s already exists. Use update instead!", book.getIsbn()));
     }
+
+    @Override
+    public void deleteById(String id) {
+        bookRepository.deleteById(id);
+    }
 }
