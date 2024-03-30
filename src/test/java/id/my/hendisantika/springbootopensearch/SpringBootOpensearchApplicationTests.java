@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.GenericContainer;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
@@ -54,5 +55,15 @@ class SpringBootOpensearchApplicationTests {
         assertEquals("Jordan Peterson", createdBook.getAuthorName());
         assertEquals(2018, createdBook.getPublicationYear());
         assertEquals("978-0345816023", createdBook.getIsbn());
+    }
+
+    @Test
+    void testGetAllBooks() throws DuplicateIsbnException {
+        bookService.create(createBook("12 rules for life", "Jordan Peterson", 2018, "978-0345816023"));
+        bookService.create(createBook("The Cathedral and the Bazaar", "Eric Raymond", 1999, "9780596106386"));
+        List<Book> books = bookService.getAll();
+
+        assertNotNull(books);
+        assertEquals(2, books.size());
     }
 }
