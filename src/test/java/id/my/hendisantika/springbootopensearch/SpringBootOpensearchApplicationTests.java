@@ -66,4 +66,15 @@ class SpringBootOpensearchApplicationTests {
         assertNotNull(books);
         assertEquals(2, books.size());
     }
+
+    @Test
+    void testFindByAuthor() throws DuplicateIsbnException {
+        bookService.create(createBook("12 rules for life", "Jordan Peterson", 2018, "978-0345816023"));
+        bookService.create(createBook("Maps of Meaning", "Jordan Peterson", 1999, "9781280407253"));
+
+        List<Book> books = bookService.findByAuthor("Jordan Peterson");
+
+        assertNotNull(books);
+        assertEquals(2, books.size());
+    }
 }
