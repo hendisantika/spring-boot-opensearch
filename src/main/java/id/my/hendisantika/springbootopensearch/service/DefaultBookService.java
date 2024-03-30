@@ -1,5 +1,6 @@
 package id.my.hendisantika.springbootopensearch.service;
 
+import id.my.hendisantika.springbootopensearch.exception.BookNotFoundException;
 import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.repository.BookRepository;
@@ -82,5 +83,16 @@ public class DefaultBookService implements BookService {
     @Override
     public void deleteById(String id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public Book update(String id, Book book) throws BookNotFoundException {
+        Book oldBook = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("There is not book associated with the given id"));
+        oldBook.setIsbn(book.getIsbn());
+        oldBook.setAuthorName(book.getAuthorName());
+        oldBook.setPublicationYear(book.getPublicationYear());
+        oldBook.setTitle(book.getTitle());
+        return bookRepository.save(oldBook);
     }
 }
