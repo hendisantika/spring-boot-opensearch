@@ -1,6 +1,7 @@
 package id.my.hendisantika.springbootopensearch.controller;
 
 import id.my.hendisantika.springbootopensearch.dto.BookDto;
+import id.my.hendisantika.springbootopensearch.exception.BookNotFoundException;
 import id.my.hendisantika.springbootopensearch.exception.DuplicateIsbnException;
 import id.my.hendisantika.springbootopensearch.model.Book;
 import id.my.hendisantika.springbootopensearch.service.BookService;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +45,11 @@ public class BookController {
     @PostMapping
     public Book createBook(@Valid @RequestBody BookDto book) throws DuplicateIsbnException {
         return bookService.create(BookDto.transform(book));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{isbn}")
+    public Book getBookByIsbn(@PathVariable String isbn) throws BookNotFoundException {
+        return bookService.getByIsbn(isbn).orElseThrow(() -> new BookNotFoundException("The given isbn is invalid"));
     }
 }

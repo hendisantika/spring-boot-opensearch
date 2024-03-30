@@ -29,7 +29,7 @@ public class BookDto {
     @NotBlank
     private String isbn;
 
-    static Book transform(BookDto bookDto) {
+    public static Book transform(BookDto bookDto) {
         Book book = new Book();
         book.setTitle(bookDto.title);
         book.setPublicationYear(bookDto.publicationYear);
