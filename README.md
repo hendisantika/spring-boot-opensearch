@@ -50,3 +50,9 @@ $ mvn clean verify
 ```
 
 Make sure you have your docker running.
+
+### Swagger UI
+
+Swagger UI
+
+![Swagger UI](img/SwaggerUI.png "Swagger UI")
