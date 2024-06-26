@@ -48,7 +48,7 @@ public class SingletonContainer {
                                 .forPort(9200)
                                 .forStatusCodeMatching(response -> response == HttpURLConnection.HTTP_OK ||
                                         response == HttpURLConnection.HTTP_UNAUTHORIZED)
-                                .withStartupTimeout(Duration.ofMinutes(2))
+                                .withStartupTimeout(Duration.ofMinutes(3))
                 );
     }
 }

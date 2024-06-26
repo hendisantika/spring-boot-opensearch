@@ -30,6 +30,10 @@ class SpringBootOpensearchApplicationTests {
 
     private static final GenericContainer<?> openSearchContainer = SingletonContainer.getInstance();
 
+//    @Container
+//    public OpensearchContainer<?> opensearch = new OpensearchContainer<>(DockerImageName.parse("opensearchproject/opensearch:2.15.0"));
+
+
     @Autowired
     private BookService bookService;
 
@@ -38,6 +42,8 @@ class SpringBootOpensearchApplicationTests {
 
     @BeforeAll
     static void beforeAll() {
+//        opensearch.start();
+//        assertTrue(openSearchContainer.isRunning());
         SingletonContainer.startContainer();
         Assertions.assertTrue(openSearchContainer.isRunning());
     }
