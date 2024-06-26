@@ -1,4 +1,4 @@
-FROM opensearchproject/opensearch:2.9.0
+FROM opensearchproject/opensearch:2.15.0
 LABEL authors="hendisantika"
 
 # this is only needed for locale development, Amazon OpenSearch Service domains come
