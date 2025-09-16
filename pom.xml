@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.opensearch.client</groupId>
             <artifactId>spring-data-opensearch-test-autoconfigure</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
