@@ -16,5 +16,7 @@ services:
     ports:
       - "5601:5601"
     environment:
-      OPENSEARCH_HOSTS: '["http://marketplace-os:9200"]'
+      OPENSEARCH_HOSTS: '["http://marketplace_os:9200"]'
       DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+    depends_on:
+      - opensearch

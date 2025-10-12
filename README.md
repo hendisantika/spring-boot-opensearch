@@ -1,10 +1,19 @@
-# Spring Data OpenSearch Example with Spring Boot 3 and OpenSearch 1.1
+# Spring Data OpenSearch Example with Spring Boot 3 and OpenSearch 2.15
 
 ### Introduction
 
 This example demonstrates how to use Spring Data OpenSearch to do simple CRUD operations.
 
-This example inspired be
+**Technology Stack:**
+
+- Spring Boot 3.5.6
+- Java 21
+- OpenSearch 2.15.0
+- Spring Data OpenSearch 2.0.2
+- Lombok 1.18.40
+- Testcontainers 1.21.3
+
+This example was inspired by
 the [Spring-Data-ElasticSearch-Example](https://github.com/kasramp/Spring-Data-ElasticSearch-Example/tree/master)
 
 You can find the tutorial about this example at this
@@ -25,19 +34,27 @@ The first thing to do is to start OpenSearch. For that, you can use the `docker-
 directory and run it like this:
 
 ```shell
-$ cd develop-scripts && docker-compose -f docker-compose up -d
+$ docker-compose -f develop-scripts/docker-compose.yml up -d
 ```
 
-It brings OpenSearch up with its dashboard.
+This will:
 
-Then you can run the application like below:
+- Build a custom OpenSearch image with the `analysis-phonetic` plugin
+- Start OpenSearch on port 9200 (and 9600 for monitoring)
+- Start OpenSearch Dashboards on port 5601
+
+Wait a few seconds for OpenSearch to fully initialize, then run the application:
 
 ```shell
 $ ./mvnw clean spring-boot:run
 ```
 
-Once everything is up and running open the browser and go to http://localhost:8080. You should see Swagger to interact
+Once everything is up and running, open your browser and go to http://localhost:8080. You should see Swagger UI to
+interact
 with.
+
+**Note:** If you encounter Lombok-related compilation errors, the pom.xml has been configured with explicit annotation
+processor paths to resolve this issue with Java 21.
 
 ### Run Testcontainers tests
 
